@@ -1,8 +1,5 @@
 var w = 1400
 var h = 900
-var sens = 0.1
-
-var land = "forestgreen"
 
 var proj = d3.geoOrthographic()
   .rotate([80, -40])
@@ -34,8 +31,8 @@ svg.append("circle")
   .attr("r", proj.scale())
   .attr("fill", "lightblue")
 
-Promise.all([d3.json("./data/original/geojson/110m.json")]).then(function(topo) {
-  var countries = topojson.feature(topo[0], topo[0].objects.countries).features;
+Promise.all([d3.json("./data/original/geojson/110m.geojson")]).then(function(data) {
+  var countries = data[0].features
   console.log(countries);
 
   svg.selectAll("path")
@@ -43,6 +40,9 @@ Promise.all([d3.json("./data/original/geojson/110m.json")]).then(function(topo) 
   .enter().append("path")
   .attr("d", path)
   .attr("class", "land")
+  .on("click", function(d) {
+    console.log(d.properties.ADMIN);
+  });
 
   svg.append("path")
   .datum(graticule)
