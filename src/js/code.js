@@ -31,17 +31,25 @@ svg.append("circle")
   .attr("r", proj.scale())
   .attr("fill", "lightblue")
 
-Promise.all([d3.json("./data/original/geojson/110m.geojson")]).then(function(data) {
+Promise.all([d3.json("./data/original/geojson/110m.geojson"), d3.json("./data/original/geojson/110m-gdp.geojson")]).then(function(data) {
   var countries = data[0].features
+  var carto = data[1].features
   console.log(countries);
+  console.log(carto);
 
   svg.selectAll("path")
   .data(countries)
   .enter().append("path")
   .attr("d", path)
   .attr("class", "land")
+  .on("mouseover", function(d) {
+    d3.select(this).style("fill", "yellow");
+  })
+  .on("mouseout", function(d) {
+    d3.select(this).style("fill", "forestgreen");
+  })
   .on("click", function(d) {
-    console.log(d.properties.ADMIN);
+    console.log(d.properties.NAME_EN);
   });
 
   svg.append("path")
