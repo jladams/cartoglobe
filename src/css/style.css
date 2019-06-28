@@ -1,0 +1,19 @@
+
+
+#svg {
+  border: 1px solid;
+  background-color: black;
+}
+
+.graticule {
+  fill: none;
+  stroke: black;
+  stroke-width: 0.5px;
+  stroke-opacity: .25;
+}
+
+.land {
+  fill: forestgreen;
+  stroke: #fff;
+  stroke-width: .5px;
+}
