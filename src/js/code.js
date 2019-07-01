@@ -37,8 +37,10 @@ Promise.all([d3.json("./data/original/geojson/110m.geojson"), d3.json("./data/or
   console.log(countries);
   console.log(carto);
 
+  var mapData = countries
+
   svg.selectAll("path")
-  .data(countries)
+  .data(mapData)
   .enter().append("path")
   .attr("d", path)
   .attr("class", "land")
@@ -57,7 +59,28 @@ Promise.all([d3.json("./data/original/geojson/110m.geojson"), d3.json("./data/or
   .attr("class", "graticule")
   .attr("d", path)
 
+  svg.on("click", function(d) {
+    if(mapData == countries) {
+      mapData = carto
+    } else {
+      mapData = countries;
+    }
+    updateMap(mapData);
+  })
+
 });
+
+
+function updateMap(newData) {
+
+  var l = svg.selectAll(".land")
+  .data(newData)
+
+  l
+  .transition()
+  .duration(3000)
+  .attr("d", path)
+}
 
 function refresh() {
   svg.selectAll(".graticule").attr("d", path);
